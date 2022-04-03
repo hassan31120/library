@@ -41,4 +41,51 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
+    }
+
+    public function comment()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role','roles_users','user_id','role_id');
+    }
+
+    public function hasAnyRole($roles)
+    {
+        if(is_array($roles))
+        {
+            foreach($roles as $role)
+            {
+                if($this->hasRole($role))
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            if($this->hasRole($roles))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasRole($role)
+    {
+        if($this->roles()->where('name',$role)->first())
+        {
+            return true;
+        }
+        return false;
+    }
+
 }
