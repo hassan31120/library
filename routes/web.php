@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +24,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/upload', ['uses'=>'App\Http\Controllers\UploadController@index','middleware'=>'roles','roles'=>['admins','users']])->name('upload');
+Route::post('/upload', ['uses'=>'App\Http\Controllers\UploadController@upload','middleware'=>'roles','roles'=>['admins','users']])->name('upload.save');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'roles', 'roles' => 'admins'], function(){
     Route::resource('users', AdminUsersController::class);
