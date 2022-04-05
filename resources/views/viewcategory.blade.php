@@ -1,9 +1,8 @@
 @extends('layouts.app')
  @section('content')
  <div class="card">
- <div class="card-header ">all book</div>
+ <div class="card-header ">{{$category->name}}</div>
  <div class="card-body">
- {{$books->links()}}
    @if (count($books) > 0)
       @foreach($books as $book)
         <div class="row">
@@ -15,7 +14,6 @@
                <p>{{$book->info}}</p>
                <br/>
                Author : {{$book->author}} <br/>
-
                 <a href="{{asset('storage/books/'.$book->bookfile)}}" class="btn btn-primary">Download</a>
                 <a href="{{route('book',$book->id)}}" class="btn btn-info">More Info</a>
             </div>

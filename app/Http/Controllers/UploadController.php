@@ -11,8 +11,7 @@ class UploadController extends Controller
 {
     public function index()
     {
-        $allcategories = Category::all();
-        return view('upload', compact('allcategories'));
+        return view('upload');
     }
     public function upload(Request $request)
     {
@@ -27,13 +26,13 @@ class UploadController extends Controller
         {
             $imageExt= $request->file('image')->getClientOriginalExtension();
             $imageName= time().'thumnnail.'.$imageExt;
-            $request->file('image')->storeAs('thumbnails',$imageName);
+            $request->file('image')->storeAs('public/thumbnails',$imageName);
         }
         if($request->hasFile('book'))
         {
             $bookExt= $request->file('book')->getClientOriginalExtension();
             $bookName= time().'book.'.$bookExt;
-            $request->file('book')->storeAs('books',$bookName);
+            $request->file('book')->storeAs('public/books',$bookName);
         }
         $book=new Book();
         $book->title=$request->input('title');

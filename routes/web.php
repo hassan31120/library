@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,12 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/',[PagesController::class, 'index'])->name('index');
+Route::post('comment/{id}',['uses'=>'App\Http\Controllers\PagesController@addcomment','middleware'=>'auth'])->name('comment');
+Route::get('/category/{id}',[PagesController::class, 'viewCategory'])->name('category');
+Route::get('/book/{id}',[PagesController::class, 'viewBook'])->name('book');
 
 Auth::routes();
 
